@@ -72,7 +72,7 @@ class PasswordHash {
     get_random_bytes(count) {
         const promise = new Promise((resolve, reject) => {
             let output = '';
-            const randomSource = RandBytes.urandom.getInstance();
+            const randomSource = process.platform === 'win32' ? RandBytes.timeRandom.getInstance() : RandBytes.urandom.getInstance();
             randomSource.getRandomBytes(count, function (buff) {
                 resolve(buff.toString('binary'));
             });
